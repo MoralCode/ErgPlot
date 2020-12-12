@@ -1,0 +1,20 @@
+from pyrow import pyrow
+
+ergs = pyrow.find()
+ergs_list = list(ergs)
+print(ergs)
+print(ergs_list[0])
+erg = pyrow.PyErg(ergs_list[0])
+print(erg)
+print(erg.get_status())
+print(erg.get_monitor(forceplot=True))
+# print(ergs.__dict__.keys())
+# print(ergs.next())
+# # erg = pyrow(ergs[0])
+# print("hello")
+# for erg in ergs:
+# 	print("hi")
+# 	print(erg)
+# 	print("E: " + )
+# print("there")
+# pyrow.PyErg(ergs[0])
