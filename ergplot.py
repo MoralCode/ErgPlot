@@ -22,7 +22,13 @@ data_source = Concept2()
 
 #initialize buffer to 0
 for i in range( buffer_size):
-	data_buffer.append([0,0])
+	data_buffer.append({
+			"time": 0,
+			"dist":0,
+			"spm": 0,
+			"pace": 0,
+			"force": []
+		})
 
 # random = np.random.random( ) # some random temperature data, i dunno
 
