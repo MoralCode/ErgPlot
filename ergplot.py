@@ -56,6 +56,11 @@ def buffer_new_datapoint(datasource, datapoint):
 	data_buffer.append(datapoint)
 	datapoints_added_since_flush += 1	
 
+def write_new_datapoint(datasource, datapoint):
+
+	with open(output_filename,"a") as f:
+		writer = csv.writer(f,delimiter=",")
+		writer.writerow(datasource.data_point_to_csv(datapoint).values())
 
 
 def handle_new_datapoint(datasource):
