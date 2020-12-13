@@ -32,11 +32,6 @@ for i in range( buffer_size):
 
 # random = np.random.random( ) # some random temperature data, i dunno
 
-# setup the figure
-fig = plt.figure(1)
-plt.suptitle('Previous %d datapoints'%buffer_size, fontsize=12)
-ax = plt.gca()
-
 
 
 
@@ -71,13 +66,5 @@ def handle_new_datapoint():
 	write_new_datapoint(data_source, raw_data)
 	
 
-def process_data_for_plots():
-	ax.plot( [item["pace"] for item in data_buffer], 'rs', ms=6) # whatever style you want...
 
-	plt.draw()
-	plt.pause(0.01)
-	plt.cla() # clears the axis 
-	
 
-data_source.setup()
-data_source.on_new_data_point = handle_new_datapoint
