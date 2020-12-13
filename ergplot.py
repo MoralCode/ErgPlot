@@ -41,7 +41,7 @@ ax = plt.gca()
 
 
 def buffer_new_datapoint(datasource, datapoint):
-	global datapoints_added_since_flush
+	global datapoints_added_since_flush, buffer_size
 	if datapoints_added_since_flush == buffer_size:
 		# flush to disk
 		print("Flushing to disk")
