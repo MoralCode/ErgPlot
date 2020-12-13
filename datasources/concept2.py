@@ -64,7 +64,7 @@ class Concept2(DataSourceInterface):
 
 			
 			self.buffer.append(strokedata)
-			self.on_new_data_point(self)
+			self.on_new_data_point()
 
 
 	def get_status(self):
