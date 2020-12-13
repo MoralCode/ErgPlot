@@ -63,11 +63,12 @@ def write_new_datapoint(datasource, datapoint):
 		writer.writerow(datasource.data_point_to_csv(datapoint).values())
 
 
-def handle_new_datapoint(datasource):
+def handle_new_datapoint():
 	#data_buffer = np.roll( data_buffer, shift=-1)
 	#data_buffer[ -1] = Temp
-	raw_data = datasource.get_data_point()
-	buffer_new_datapoint(datasource, raw_data)
+	print("Handling new datapoint")
+	raw_data = data_source.get_data_point()
+	write_new_datapoint(data_source, raw_data)
 	
 
 def process_data_for_plots():
