@@ -60,7 +60,7 @@ class Concept2(DataSourceInterface):
 
 			#save data to buffer
 			print("SaveData")
-			strokedata = self.new_data_point(monitor)
+			strokedata = self.new_data_point(monitor, force)
 
 			
 			self.buffer.append(strokedata)
@@ -73,7 +73,7 @@ class Concept2(DataSourceInterface):
 	def get_buffer_size(self):
 		return len(self.buffer)
 
-	def new_data_point(self, monitor):
+	def new_data_point(self, monitor, force):
 		return {
 			"time": monitor['time'],
 			"dist": monitor['distance'],
