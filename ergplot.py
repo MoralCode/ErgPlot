@@ -58,11 +58,14 @@ def handle_new_datapoint(datasource):
 	raw_data = datasource.get_data_point()
 	buffer_new_datapoint(datasource, raw_data)
 	
-    ax.plot( [item[1] for item in data_buffer], 'rs', ms=6) # whatever style you want...
-    plt.draw()
-    plt.pause(0.01)
-    plt.cla() # clears the axis 
-    
+
+def process_data_for_plots():
+	ax.plot( [item["pace"] for item in data_buffer], 'rs', ms=6) # whatever style you want...
+
+	plt.draw()
+	plt.pause(0.01)
+	plt.cla() # clears the axis 
+	
 
 data_source.setup()
 data_source.on_new_data_point = handle_new_datapoint
