@@ -27,6 +27,7 @@ class Concept2(DataSourceInterface):
 
 		#Loop until workout has begun
 		self.status = Status(State.WAITING, "Waiting for workout to start.")
+		print("Waiting for workout to start.")
 		while workout['state'] == 0:
 			time.sleep(1)
 			workout = self.erg.get_workout()
@@ -37,12 +38,14 @@ class Concept2(DataSourceInterface):
 			forceplot = self.erg.get_forceplot()
 			#Loop while waiting for drive
 			self.status = Status(State.READY, "Waiting for drive.")
+			print("Waiting for drive.")
 			while forceplot['strokestate'] != 2 and workout['state'] == 1:
 				#ToDo: sleep?
 				forceplot = self.erg.get_forceplot()
 				workout = self.erg.get_workout()
 
 			self.status = Status(State.RECORDING, "Recording Data.")
+			print("Recording Data.")
 			#Record force data during the drive
 			force = forceplot['forceplot'] #start of pull (when strokestate first changed to 2)
 			monitor = self.erg.get_monitor() #get monitor data for start of stroke
@@ -56,6 +59,7 @@ class Concept2(DataSourceInterface):
 			force.extend(forceplot['forceplot'])
 
 		#save data to buffer
+		print("SaveData")
 		strokedata = self.new_data_point(monitor)
 
 		
