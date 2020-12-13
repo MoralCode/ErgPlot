@@ -66,5 +66,9 @@ def handle_new_datapoint():
 	write_new_datapoint(data_source, raw_data)
 	
 
+data_source.setup()
+
+data_source.on_new_data_point = handle_new_datapoint
+data_source.run()
 
 
