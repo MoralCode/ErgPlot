@@ -1,9 +1,9 @@
 from enum import Enum
 class State(Enum):
-    ERROR = 0
-    WAITING = 1
-    READY = 2
-    RECORDING = 3
+	ERROR = 0
+	WAITING = 1
+	READY = 2
+	RECORDING = 3
 
 class Status():
 	state = State.WAITING

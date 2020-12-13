@@ -58,7 +58,7 @@ class Concept2(DataSourceInterface):
 		strokedata = self.new_data_point(monitor)
 
 		
-        self.buffer.append(strokedata)
+		self.buffer.append(strokedata)
 		self.on_new_data_point(self)
 
 
@@ -83,7 +83,7 @@ class Concept2(DataSourceInterface):
 		data = list(datapoint.values())
 
 		# Convert data to CSV
-        forcedata = ",".join([str(f) for f in forcedata])
+		forcedata = ",".join([str(f) for f in forcedata])
 		strokedata = ",".join([str(p) for p in data])
 		return strokedata + forcedata + '\n'
 
