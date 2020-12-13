@@ -18,15 +18,15 @@ class Concept2(DataSourceInterface):
 
 	def setup(self):
 		assert len(self.erglist) > 0, "Please connect an erg via USB to be able to log data"
-		self.erg = pyrow.PyErg(ergs[0])
+		self.erg = pyrow.PyErg(self.erglist[0])
 		print("Connected to Erg")
 
 	# This method is heavily based on the code from Py3Row's superceded samples https://github.com/MoralCode/Py3Row/commit/f52501585ec2fa06fb1cb75f8dac60b2829ebb02
-	def run():
+	def run(self):
 		workout = self.erg.get_workout()
 
 		#Loop until workout has begun
-		self.status = Status(Status.WAITING, "Waiting for workout to start.")
+		self.status = Status(State.WAITING, "Waiting for workout to start.")
 		while workout['state'] == 0:
 			time.sleep(1)
 			workout = self.erg.get_workout()
@@ -36,13 +36,13 @@ class Concept2(DataSourceInterface):
 
 			forceplot = self.erg.get_forceplot()
 			#Loop while waiting for drive
-			self.status = Status(Status.READY, "Waiting for drive.")
+			self.status = Status(State.READY, "Waiting for drive.")
 			while forceplot['strokestate'] != 2 and workout['state'] == 1:
 				#ToDo: sleep?
 				forceplot = self.erg.get_forceplot()
 				workout = self.erg.get_workout()
 
-			self.status = Status(Status.RECORDING, "Recording Data.")
+			self.status = Status(State.RECORDING, "Recording Data.")
 			#Record force data during the drive
 			force = forceplot['forceplot'] #start of pull (when strokestate first changed to 2)
 			monitor = self.erg.get_monitor() #get monitor data for start of stroke
@@ -72,7 +72,7 @@ class Concept2(DataSourceInterface):
 	def new_data_point(self, monitor):
 		return {
 			"time": monitor['time'],
-			"model": monitor['distance'],
+			"dist": monitor['distance'],
 			"spm": monitor['spm'],
 			"pace": monitor['pace'],
 			"force": force
