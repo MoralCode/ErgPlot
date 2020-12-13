@@ -58,13 +58,13 @@ class Concept2(DataSourceInterface):
 			forceplot = self.erg.get_forceplot()
 			force.extend(forceplot['forceplot'])
 
-		#save data to buffer
-		print("SaveData")
-		strokedata = self.new_data_point(monitor)
+			#save data to buffer
+			print("SaveData")
+			strokedata = self.new_data_point(monitor)
 
-		
-		self.buffer.append(strokedata)
-		self.on_new_data_point(self)
+			
+			self.buffer.append(strokedata)
+			self.on_new_data_point(self)
 
 
 	def get_status(self):
