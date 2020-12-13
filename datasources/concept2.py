@@ -90,7 +90,8 @@ class Concept2(DataSourceInterface):
 		# Convert data to CSV
 		forcedata = ";".join([str(f) for f in forcedata])
 		strokedata = ",".join([str(p) for p in data])
-		return strokedata + forcedata + '\n'
+		datapoint["force"] = forcedata
+		return datapoint
 
 	def get_data_point(self):
 		assert len(self.buffer) > 0, "No Data in Buffer"
