@@ -59,9 +59,6 @@ def write_new_datapoint(datasource, datapoint):
 
 
 def handle_new_datapoint():
-	#data_buffer = np.roll( data_buffer, shift=-1)
-	#data_buffer[ -1] = Temp
-	print("Handling new datapoint")
 	raw_data = data_source.get_data_point()
 	write_new_datapoint(data_source, raw_data)
 	
