@@ -29,7 +29,9 @@ plt.suptitle('Previous %d datapoints'%buffer_size, fontsize=12)
 ax = plt.gca()
 
 
-def new_datapoint(datapoint):
+
+
+def buffer_new_datapoint(datasource, datapoint):
 	global datapoints_added_since_flush
 	if datapoints_added_since_flush == buffer_size:
 		# flush to disk
@@ -37,7 +39,7 @@ def new_datapoint(datapoint):
 		with open(output_filename,"a") as f:
 			writer = csv.writer(f,delimiter=",")
 			for sample in data_buffer:
-				writer.writerow(sample)
+				writer.writerow(datasource.data_point_to_csv(sample))
 		datapoints_added_since_flush = 0
 		print("Done.")
 	# either way, write new datapoint
@@ -47,10 +49,12 @@ def new_datapoint(datapoint):
 
 
 
-while True:
+def handle_new_datapoint(datasource):
     #data_buffer = np.roll( data_buffer, shift=-1)
     #data_buffer[ -1] = Temp
-    new_datapoint([time.time(),random()])
+	raw_data = datasource.get_data_point()
+    buffer_new_datapoint(datasource, raw_data)
+	
     ax.plot( [item[1] for item in data_buffer], 'rs', ms=6) # whatever style you want...
     plt.draw()
     plt.pause(0.01)
