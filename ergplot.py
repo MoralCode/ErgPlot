@@ -6,6 +6,7 @@ import numpy as np
 import pylab as plt
 import csv, time, math
 from random import *
+from datasources import Concept2
 
 estimated_rpm= 800
 seconds_of_data = 5
@@ -16,6 +17,8 @@ data_buffer = deque()
 
 datapoints_added_since_flush = 0
 output_filename = "randomdatatest.csv"
+
+data_source = Concept2()
 
 #initialize buffer to 0
 for i in range( buffer_size):
@@ -61,3 +64,5 @@ def handle_new_datapoint(datasource):
     plt.cla() # clears the axis 
     
 
+data_source.setup()
+data_source.on_new_data_point = handle_new_datapoint
