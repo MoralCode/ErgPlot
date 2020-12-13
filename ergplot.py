@@ -28,11 +28,6 @@ fig = plt.figure(1)
 plt.suptitle('Previous %d datapoints'%buffer_size, fontsize=12)
 ax = plt.gca()
 
-# 	try:
-	# ser_bytes = ser.readline()
-	# decoded_bytes = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-	# if (float(decoded_bytes) >0.0 ):
-	# 	print(decoded_bytes)
 
 def new_datapoint(datapoint):
 	global datapoints_added_since_flush
@@ -62,60 +57,3 @@ while True:
     plt.cla() # clears the axis 
     
 
-
-
-# import serial
-# import time
-# import csv
-
-# ser = serial.Serial('/dev/ttyACM0', 9600)
-# ser.flushInput()
-
-# while True:
-# 	# try:
-# 	ser_bytes = ser.readline()
-# 	decoded_bytes = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
-# 	if (float(decoded_bytes) >0.0 ):
-# 		print(decoded_bytes)
-# 	with open("test_jack_data2.csv","a") as f:
-# 		writer = csv.writer(f,delimiter=",")
-# 		writer.writerow([time.time(),decoded_bytes])
-# 	# except Exception as e:
-# 	# 	print(e)
-# 	# 	print("Keyboard Interrupt")
-	# 	break
-
-
- 
-# import matplotlib.pyplot as plt
-# import matplotlib.animation as animation
-# from matplotlib import dates as mpldates
-# from matplotlib import style
-# import time
-# from datetime import datetime
-# style.use('fivethirtyeight')
-
-# fig = plt.figure()
-# ax1 = fig.add_subplot(1,1,1)
-
-# axes = plt.gca()
-# axes.set_ylim([0,1023])
-
-# def animate(i):
-#     graph_data = open('test_jack_data2.csv','r').read()
-#     lines = graph_data.split('\n')
-#     xs = []
-#     ys = []
-#     for line in lines:
-#         if len(line) > 1:
-#             x, y = line.split(',')
-#             xs.append(float(x))#datetime.fromtimestamp(
-#             ys.append(float(y))
-#     # dates = mpldates.date2num(xs)
-#     ax1.clear()
-#     ax1.plot(xs, ys)
-
-# #swap the comments on the following 2 lines to get an static plot instead of a live plot
-# ani = animation.FuncAnimation(fig, animate, interval=500)
-# # animate(1)
-# plt.show()
