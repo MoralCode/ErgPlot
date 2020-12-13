@@ -11,13 +11,13 @@ class Concept2(DataSourceInterface):
 
 	def __init__(self): 
 		self.erglist = list(pyrow.find())
-		self.status = Status()
+		self.status = Status(State.WAITING, "")
 		self.buffer = []
 		self.on_new_data_point = default_empty_event_handler
 		# self.run = True
 
 	def setup(self):
-		assert len(self.erglist) >= 0, "Please connect an erg via USB to be able to log data"
+		assert len(self.erglist) > 0, "Please connect an erg via USB to be able to log data"
 		self.erg = pyrow.PyErg(ergs[0])
 		print("Connected to Erg")
 
