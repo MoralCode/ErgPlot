@@ -1,5 +1,6 @@
 from pyrow import pyrow
-from datasource import DataSourceInterface, Status
+from datasources.datasouce import DataSourceInterface, Status
+from helpers.status import State
 import enum
 
 

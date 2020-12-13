@@ -6,7 +6,7 @@ import numpy as np
 import pylab as plt
 import csv, time, math
 from random import *
-from datasources import Concept2
+from datasources.concept2 import Concept2
 
 estimated_rpm= 800
 seconds_of_data = 5

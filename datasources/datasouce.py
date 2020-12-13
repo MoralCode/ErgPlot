@@ -1,6 +1,6 @@
 # This file contains the interface thatdatasources should implement in order to be able to be swapped out
 # See https://realpython.com/python-interface/ for info
-from helpers import Status
+from helpers.status import Status
 
 class DataSourceInterface:
 
