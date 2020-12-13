@@ -22,7 +22,7 @@ data_source = Concept2()
 
 #initialize buffer to 0
 for i in range( buffer_size):
-    data_buffer.append([0,0])
+	data_buffer.append([0,0])
 
 # random = np.random.random( ) # some random temperature data, i dunno
 
@@ -53,10 +53,10 @@ def buffer_new_datapoint(datasource, datapoint):
 
 
 def handle_new_datapoint(datasource):
-    #data_buffer = np.roll( data_buffer, shift=-1)
-    #data_buffer[ -1] = Temp
+	#data_buffer = np.roll( data_buffer, shift=-1)
+	#data_buffer[ -1] = Temp
 	raw_data = datasource.get_data_point()
-    buffer_new_datapoint(datasource, raw_data)
+	buffer_new_datapoint(datasource, raw_data)
 	
     ax.plot( [item[1] for item in data_buffer], 'rs', ms=6) # whatever style you want...
     plt.draw()
