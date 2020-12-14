@@ -26,27 +26,26 @@ axs[1,1].set_title('Distance')
 
 def process_data_for_plots(i):
 
-	lines = LastNlines(output_filename, buffer_size)
-	data = []
-	plt.cla() # clears the axis 
+	lines = []
+	try:
+		lines = LastNlines(output_filename, buffer_size)
 
+		data = []
+		forces = []
 
-	# reader = csv.reader(csvfile, skipinitialspace=True)
-	# data.append(tuple(next(reader))) # Header
-	# "time": monitor['time'],
-	# 		"dist": monitor['distance'],
-	# 		"spm": monitor['spm'],
-	# 		"pace": monitor['pace'],
-	# 		"force": force
-	# print(len(lines))
-	for line in lines:
-		# print(line.split(","))
-		time, dist, spm, pace, force = line.split(",")
-		try:
-			data.append((float(time), float(dist), int(spm), float(pace), [int(f) for f in force.split(";")]))
-		except Exception:
-			data.append(tuple(line))
+		# clear all the axes
+		for row in range(len(axs)):
+			for col in range(len(axs)):
+				axs[row,col].clear()
 
+		for line in lines:
+			time, dist, spm, pace, force = line.split(",")
+			try:
+				fdata = [int(f) for f in force.split(";")]
+				data.append((float(time), float(dist), int(spm), float(pace), fdata))
+				forces.extend(fdata)
+			except Exception:
+				data.append(tuple(line))
 	
 
 		axs[0,0].plot( [item[3] for item in data],  label="pace") # 'rs', ms=6
@@ -54,11 +53,13 @@ def process_data_for_plots(i):
 		axs[1,0].plot( [item[2] for item in data], label="spm")
 		axs[1,1].plot( [item[1] for item in data], label="distance")
 	
+		# plt.legend(loc='upper right')
 
-	plt.draw()
-	plt.pause(0.01)
+		plt.draw()
+		plt.pause(0.01)
+	except Exception:
+		print("Error plotting data")
 	
 
 ani = animation.FuncAnimation(fig, process_data_for_plots, interval=1000)
 plt.show()
-# data_source.run()
