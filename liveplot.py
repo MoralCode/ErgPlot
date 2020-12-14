@@ -13,12 +13,15 @@ buffer_size = 7
 output_filename = "randomdatatest.csv"
 
 
+fig, axs = plt.subplots(2, 2)
+fig.suptitle('Grid of subplots')
+axs[0,0].set_title('Pace')
+axs[0,1].set_title('Force')
+axs[1,0].set_title('SPM')
+axs[1,1].set_title('Distance')
+
 
 # setup the figure
-fig = plt.figure(1)
-plt.suptitle('Previous %d datapoints'%buffer_size, fontsize=12)
-ax = plt.gca()
-
 
 
 def process_data_for_plots(i):
@@ -45,9 +48,11 @@ def process_data_for_plots(i):
 			data.append(tuple(line))
 
 	
-	ax.plot( [item[3] for item in data], 'rs', ms=6) # whatever style you want...
 
-	# ax2.plot( [force_sample for stroke in data_buffer for force_sample in stroke["force"]], 'rs', ms=6) # whatever style you want...
+		axs[0,0].plot( [item[3] for item in data],  label="pace") # 'rs', ms=6
+		axs[0,1].plot( forces, label="force")
+		axs[1,0].plot( [item[2] for item in data], label="spm")
+		axs[1,1].plot( [item[1] for item in data], label="distance")
 	
 
 	plt.draw()
