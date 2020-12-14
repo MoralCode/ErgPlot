@@ -16,7 +16,7 @@ buffer_size = math.ceil(estimated_rpm * fraction_of_minute) # how many data poin
 data_buffer = deque()
 
 datapoints_added_since_flush = 0
-output_filename = "randomdatatest.csv"
+output_filename = "10k.csv"
 
 data_source = Concept2()
 

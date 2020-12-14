@@ -9,8 +9,8 @@ from helpers.common import LastNlines
 from datetime import datetime
 style.use('fivethirtyeight')
 
-buffer_size = 7
-output_filename = "randomdatatest.csv"
+buffer_size = 15
+output_filename = "10k.csv"
 
 
 fig, axs = plt.subplots(2, 2)
