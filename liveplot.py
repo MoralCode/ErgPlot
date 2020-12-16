@@ -9,7 +9,7 @@ from helpers.common import LastNlines
 from datetime import datetime
 style.use('fivethirtyeight')
 
-buffer_size = 15
+buffer_size = 10
 output_filename = "10k.csv"
 
 
