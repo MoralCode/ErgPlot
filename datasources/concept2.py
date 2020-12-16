@@ -90,10 +90,10 @@ class Concept2(DataSourceInterface):
 		forcedata = datapoint.pop('forcecurve', [])
 		strokestatsdata = datapoint.pop('strokestats', [])
 		# manually convert forcecurve data to CSV as it wont get processed properly by the builtin library
-	
-		datapoint["strokestats"] = separate_values(strokestatsdata.values())
-		datapoint["forcecurve"] = separate_values(forcedata, separator=";")
-		return datapoint
+		csv_ready = {**datapoint, **strokestatsdata}
+		# datapoint["strokestats"] = separate_values(strokestatsdata.values())
+		csv_ready["forcecurve"] = separate_values(forcedata, separator=";")
+		return csv_ready
 
 
 	def get_stroke_stats(self):
