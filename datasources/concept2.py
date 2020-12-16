@@ -61,7 +61,8 @@ class Concept2(DataSourceInterface):
 
 			#save data to buffer
 			print("SaveData")
-			strokedata = self.new_data_point(monitor, forcecurve)
+			strokestats = self.get_stroke_stats()
+			strokedata = self.new_data_point(monitor, forcecurve, strokestats)
 
 			
 			self.buffer.append(strokedata)
@@ -74,22 +75,57 @@ class Concept2(DataSourceInterface):
 	def get_buffer_size(self):
 		return len(self.buffer)
 
-	def new_data_point(self, monitor, forcecurve):
+	def new_data_point(self, monitor, forcecurve, stats):
 		return {
 			"time": monitor['time'],
 			"dist": monitor['distance'],
 			"spm": monitor['spm'],
 			"pace": monitor['pace'],
+			"strokestats": stats,
 			"forcecurve": forcecurve
 		}
 		
 	
 	def data_point_to_csv(self, datapoint):
 		forcedata = datapoint.pop('forcecurve', [])
-		
+		strokestatsdata = datapoint.pop('strokestats', [])
 		# manually convert forcecurve data to CSV as it wont get processed properly by the builtin library
+	
+		datapoint["strokestats"] = separate_values(strokestatsdata.values())
 		datapoint["forcecurve"] = separate_values(forcedata, separator=";")
 		return datapoint
+
+
+	def get_stroke_stats(self):
+		# CSAFE_SETUSERCFG1_CMD + CSAFE_PM_GET_STROKESTATS
+		command = ['CSAFE_PM_GET_STROKESTATS', 0]
+
+		# SEE PAGE 56 of the pdf
+		#  A maximum block length of 32 bytes (16 words) can be read. Fewer words can be read by specifying
+		# the block length accordingly, but a complete 33 bytes of response data will be returned. Only data
+		# samples recorded since the last read will be returned. The first byte of the response will indicate how
+		# many valid data bytes are returned.
+		result = self.get_raw_csafe(command)
+		# print(result)
+		# print(result['CSAFE_PM_GET_STROKESTATS'])
+		result_dict = {
+			"distance": result['CSAFE_PM_GET_STROKESTATS'][0],
+			"drivetime": result['CSAFE_PM_GET_STROKESTATS'][1],
+			"recoverytime": result['CSAFE_PM_GET_STROKESTATS'][2],
+			"strokelength": result['CSAFE_PM_GET_STROKESTATS'][3],
+			"strokecount": result['CSAFE_PM_GET_STROKESTATS'][4],
+			"peakforce": result['CSAFE_PM_GET_STROKESTATS'][5],
+			"avgforce": result['CSAFE_PM_GET_STROKESTATS'][6],
+			"work": result['CSAFE_PM_GET_STROKESTATS'][7]
+		}
+		return result_dict
+
+	def get_raw_csafe(self, command):
+		# 'CSAFE_GETPACE_CMD'
+		if type(command) not in (list, tuple):
+			command = [command,]
+		result = self.erg.send(command)
+		return result
 
 	def get_data_point(self):
 		assert len(self.buffer) > 0, "No Data in Buffer"
