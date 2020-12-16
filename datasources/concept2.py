@@ -95,6 +95,8 @@ class Concept2(DataSourceInterface):
 		csv_ready["forcecurve"] = separate_values(forcedata, separator=";")
 		return csv_ready
 
+	def get_monitor_data(self):
+		return self.erg.get_monitor()
 
 	def get_stroke_stats(self):
 		# CSAFE_SETUSERCFG1_CMD + CSAFE_PM_GET_STROKESTATS
