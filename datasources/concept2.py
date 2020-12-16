@@ -115,8 +115,9 @@ class Concept2(DataSourceInterface):
 			"strokelength": result['CSAFE_PM_GET_STROKESTATS'][3],
 			"strokecount": result['CSAFE_PM_GET_STROKESTATS'][4],
 			"peakforce": result['CSAFE_PM_GET_STROKESTATS'][5],
-			"avgforce": result['CSAFE_PM_GET_STROKESTATS'][6],
-			"work": result['CSAFE_PM_GET_STROKESTATS'][7]
+			"impulseforce": result['CSAFE_PM_GET_STROKESTATS'][6],
+			"avgforce": result['CSAFE_PM_GET_STROKESTATS'][7],
+			"work": result['CSAFE_PM_GET_STROKESTATS'][8]
 		}
 		return result_dict
 
