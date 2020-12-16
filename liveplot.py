@@ -61,6 +61,9 @@ def process_data_for_plots(i):
 		print("Error plotting data")
 		print(e)
 	
+def convert_to_rpm(pace):
+	speed = 1/(pace/500)
+	return (speed*60*12.93)/3
 
 ani = animation.FuncAnimation(fig, process_data_for_plots, interval=1000)
 plt.show()
