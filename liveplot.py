@@ -57,8 +57,9 @@ def process_data_for_plots(i):
 
 		plt.draw()
 		plt.pause(0.01)
-	except Exception:
+	except Exception as e:
 		print("Error plotting data")
+		print(e)
 	
 
 ani = animation.FuncAnimation(fig, process_data_for_plots, interval=1000)
