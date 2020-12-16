@@ -15,10 +15,6 @@ output_filename = "10k.csv"
 
 fig, axs = plt.subplots(2, 2)
 fig.suptitle('Grid of subplots')
-axs[0,0].set_title('Pace')
-axs[0,1].set_title('Force')
-axs[1,0].set_title('SPM')
-axs[1,1].set_title('Work')
 
 
 # setup the figure
@@ -37,6 +33,10 @@ def process_data_for_plots(i):
 		for row in range(len(axs)):
 			for col in range(len(axs)):
 				axs[row,col].clear()
+				axs[0,0].set_title('Impulse')
+				axs[0,1].set_title('Force')
+				axs[1,0].set_title('RPM')
+				axs[1,1].set_title('Work')
 
 		for line in lines:
 			time, dist, spm, pace, work, force = line.split(",")
