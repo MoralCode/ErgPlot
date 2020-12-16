@@ -14,3 +14,5 @@ def LastNlines(fname, n):
 		q = deque(f, n)  # replace 2 with n (lines read at the end)
 		return list(q)
 	
+def separate_values(data, separator=","):
+	return separator.join([str(value) for value in data])

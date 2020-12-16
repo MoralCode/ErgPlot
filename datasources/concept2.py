@@ -1,6 +1,7 @@
 from pyrow import pyrow
 from datasources.datasouce import DataSourceInterface, Status
 from helpers.status import State
+from helpers.common import separate_values
 import enum, time
 
 
@@ -85,12 +86,9 @@ class Concept2(DataSourceInterface):
 	
 	def data_point_to_csv(self, datapoint):
 		forcedata = datapoint.pop('forcecurve', [])
-		data = list(datapoint.values())
-
-		# Convert data to CSV
-		forcedata = ";".join([str(f) for f in forcedata])
-		strokedata = ",".join([str(p) for p in data])
-		datapoint["forcecurve"] = forcedata
+		
+		# manually convert forcecurve data to CSV as it wont get processed properly by the builtin library
+		datapoint["forcecurve"] = separate_values(forcedata, separator=";")
 		return datapoint
 
 	def get_data_point(self):
