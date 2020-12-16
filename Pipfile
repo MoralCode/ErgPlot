@@ -9,6 +9,7 @@ verify_ssl = true
 matplotlib = "*"
 pyserial = "*"
 pyusb = "*"
+pyrow = {path = "./../Py3Row"}
 
 [requires]
 python_version = "3.8"

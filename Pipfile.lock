@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "869ca17a18d3c3159349c9c58220de366faadf7d60be4e6406c49f43b1f481a1"
+            "sha256": "e66b6cbb71fd4f273786df86f59295c801dd25c5d070c8598addd2376edcdba3"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -169,6 +169,9 @@
                 "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"
             ],
             "version": "==2.4.7"
+        },
+        "pyrow": {
+            "path": "./../Py3Row"
         },
         "pyserial": {
             "hashes": [
