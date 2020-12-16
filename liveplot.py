@@ -39,19 +39,22 @@ def process_data_for_plots(i):
 				axs[1,1].set_title('Work')
 
 		for line in lines:
-			time, dist, spm, pace, work, force = line.split(",")
+			time, dist, spm, pace, sdist, drivetime, _, _, _, _, impulse, _, work, force = line.split(",")
 			try:
 				fdata = [int(f) for f in force.split(";")]
-				data.append((float(time), float(dist), int(spm), float(pace), int(work), fdata))
+				data.append((float(time), float(dist), int(spm), float(pace), float(sdist), float(drivetime), int(impulse), int(work), fdata))
 				forces.extend(fdata)
 			except Exception:
 				data.append(tuple(line))
 	
-
-		axs[0,0].plot( [item[3] for item in data],  label="pace") # 'rs', ms=6
+		
+		axs[0,0].plot( [item[6] for item in data],  label="impulse") # 'rs', ms=6
 		axs[0,1].plot( forces, label="force")
-		axs[1,0].plot( [item[2] for item in data], label="spm")
-		axs[1,1].plot( [item[4] for item in data], label="Work")
+		axs[1,0].plot( [convert_to_rpm(item[4], item[5]) for item in data], label="rpm")
+		axs[1,0].plot( [item[4]/item[5] for item in data], label="dist/stroke")
+
+		# plt.legend(loc='upper right')
+		axs[1,1].plot( [item[7] for item in data], label="Work")
 	
 		# plt.legend(loc='upper right')
 
