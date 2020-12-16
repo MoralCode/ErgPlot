@@ -46,21 +46,21 @@ class Concept2(DataSourceInterface):
 
 			self.status = Status(State.RECORDING, "Recording Data.")
 			print("Recording Data.")
-			#Record force data during the drive
-			force = forceplot['forceplot'] #start of pull (when strokestate first changed to 2)
+			#Record forcecurve data during the drive
+			forcecurve = forceplot['forceplot'] #start of pull (when strokestate first changed to 2)
 			monitor = self.erg.get_monitor() #get monitor data for start of stroke
 			#Loop during drive
 			while forceplot['strokestate'] == 2:
 				#ToDo: sleep?
 				forceplot = self.erg.get_forceplot()
-				force.extend(forceplot['forceplot'])
+				forcecurve.extend(forceplot['forceplot'])
 
 			forceplot = self.erg.get_forceplot()
-			force.extend(forceplot['forceplot'])
+			forcecurve.extend(forceplot['forceplot'])
 
 			#save data to buffer
 			print("SaveData")
-			strokedata = self.new_data_point(monitor, force)
+			strokedata = self.new_data_point(monitor, forcecurve)
 
 			
 			self.buffer.append(strokedata)
@@ -73,24 +73,24 @@ class Concept2(DataSourceInterface):
 	def get_buffer_size(self):
 		return len(self.buffer)
 
-	def new_data_point(self, monitor, force):
+	def new_data_point(self, monitor, forcecurve):
 		return {
 			"time": monitor['time'],
 			"dist": monitor['distance'],
 			"spm": monitor['spm'],
 			"pace": monitor['pace'],
-			"force": force
+			"forcecurve": forcecurve
 		}
 		
 	
 	def data_point_to_csv(self, datapoint):
-		forcedata = datapoint.pop('force', [])
+		forcedata = datapoint.pop('forcecurve', [])
 		data = list(datapoint.values())
 
 		# Convert data to CSV
 		forcedata = ";".join([str(f) for f in forcedata])
 		strokedata = ",".join([str(p) for p in data])
-		datapoint["force"] = forcedata
+		datapoint["forcecurve"] = forcedata
 		return datapoint
 
 	def get_data_point(self):
