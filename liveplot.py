@@ -18,7 +18,7 @@ fig.suptitle('Grid of subplots')
 axs[0,0].set_title('Pace')
 axs[0,1].set_title('Force')
 axs[1,0].set_title('SPM')
-axs[1,1].set_title('Distance')
+axs[1,1].set_title('Work')
 
 
 # setup the figure
@@ -39,10 +39,10 @@ def process_data_for_plots(i):
 				axs[row,col].clear()
 
 		for line in lines:
-			time, dist, spm, pace, force = line.split(",")
+			time, dist, spm, pace, work, force = line.split(",")
 			try:
 				fdata = [int(f) for f in force.split(";")]
-				data.append((float(time), float(dist), int(spm), float(pace), fdata))
+				data.append((float(time), float(dist), int(spm), float(pace), int(work), fdata))
 				forces.extend(fdata)
 			except Exception:
 				data.append(tuple(line))
@@ -51,7 +51,7 @@ def process_data_for_plots(i):
 		axs[0,0].plot( [item[3] for item in data],  label="pace") # 'rs', ms=6
 		axs[0,1].plot( forces, label="force")
 		axs[1,0].plot( [item[2] for item in data], label="spm")
-		axs[1,1].plot( [item[1] for item in data], label="distance")
+		axs[1,1].plot( [item[4] for item in data], label="Work")
 	
 		# plt.legend(loc='upper right')
 
