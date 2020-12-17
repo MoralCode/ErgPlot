@@ -21,6 +21,6 @@ def test_data_rate(function):
 		time.sleep(0.01)
 
 
-test_data_rate(data_source.get_monitor_data)
+test_data_rate(data_source.get_stroke_stats)
 
 
