@@ -62,10 +62,10 @@ def process_data_for_plots(i):
 
 		buffer.append(pace_val)
 		
-		axs.plot( [point["raw"] for point in buffer], label="raw")
-		axs.plot( [point["differential"] for point in buffer], label="diff_real")
-		axs.plot( [point["differential2"] for point in buffer], label="diff_erg")
-		axs.plot( [point["stroke"] for point in buffer], label="stroke")
+		axs.plot( [point["raw"] for point in buffer[1:]], label="raw")
+		axs.plot( [point["differential"] for point in buffer[1:]], label="diff_real")
+		axs.plot( [point["differential2"] for point in buffer[1:]], label="diff_erg")
+		axs.plot( [point["stroke"] for point in buffer[1:]], label="stroke")
 		# 3 different ways
 
 
