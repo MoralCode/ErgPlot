@@ -104,8 +104,8 @@ def get_differential_pace():
 	if mon["distance"] != last_dist or mon["time"] != last_duration:
 		current_millis = int(round(time.time() * 1000))
 		delta_t = (current_millis - timestamp)/1000
-		delta_t2 = (mon["time"] - last_duration)/100
-		delta_x = (mon["distance"] - last_dist)/10
+		delta_t2 = (mon["time"] - last_duration)
+		delta_x = (mon["distance"] - last_dist)
 		timestamp = current_millis
 		last_dist = mon["distance"]
 		last_duration = mon["time"]
@@ -133,7 +133,7 @@ def get_pace_values():
 	# }
 	diff_real, diff_erg=get_differential_pace()
 	point = {
-		"raw": 1/(data_source.get_raw_pace()/500),
+		"raw": 1/(data_source.get_raw_pace()/250),
 		"differential": diff_real,
 		"differential2": diff_erg,
 		"stroke": get_stroke_pace()
