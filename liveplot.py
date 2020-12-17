@@ -17,7 +17,12 @@ from datasources.concept2 import Concept2
 data_source = Concept2()
 
 
-data_source.setup()
+# change the book to true and paste data in here  to display a fixed graph
+fixed_graph = False
+buffer = []
+
+if not fixed_graph:
+	data_source.setup()
 
 # setup the figure
 fig = plt.figure(1)
@@ -27,7 +32,6 @@ axs = plt.gca()
 
 # setup the figure
 
-buffer = []
 
 def process_data_for_plots(i):
 
@@ -57,11 +61,12 @@ def process_data_for_plots(i):
 		# 	except Exception:
 		# 		data.append(tuple(line))
 
-		pace_val = get_pace_values()
-		# print(pace_val)
+		if not fixed_graph:
+			pace_val = get_pace_values()
+			# print(pace_val)
 
-		buffer.append(pace_val)
-		
+			buffer.append(pace_val)
+
 		axs.plot( [point["raw"] for point in buffer[1:]], label="raw")
 		axs.plot( [point["differential"] for point in buffer[1:]], label="diff_real")
 		axs.plot( [point["differential2"] for point in buffer[1:]], label="diff_erg")
