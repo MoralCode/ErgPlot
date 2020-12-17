@@ -98,6 +98,12 @@ class Concept2(DataSourceInterface):
 	def get_monitor_data(self):
 		return self.erg.get_monitor()
 
+	def get_raw_pace(self):
+		# CSAFE_SETUSERCFG1_CMD + CSAFE_PM_GET_STROKESTATS
+		command_name = 'CSAFE_GETPACE_CMD'
+		command = [command_name, ]
+		return self.get_raw_csafe(command)[command_name][0]
+
 	def get_stroke_stats(self):
 		# CSAFE_SETUSERCFG1_CMD + CSAFE_PM_GET_STROKESTATS
 		command = ['CSAFE_PM_GET_STROKESTATS', 0]
