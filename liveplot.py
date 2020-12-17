@@ -86,8 +86,8 @@ def process_data_for_plots(i):
 		print("Error plotting data")
 		print(e)
 	
-def convert_to_rpm(pace):
-	speed = 1/(pace/500)
+def convert_to_rpm(speed):
+	# speed = 1/(pace/500)
 	return (speed*60*12.93)/3
 
 
