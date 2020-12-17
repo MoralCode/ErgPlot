@@ -138,7 +138,7 @@ def get_pace_values():
 	# }
 	diff_real, diff_erg=get_differential_pace()
 	point = {
-		"raw": 1/(data_source.get_raw_pace()/250),
+		"raw": 1/(data_source.get_monitor_data()['pace']/500),
 		"differential": diff_real,
 		"differential2": diff_erg,
 		"stroke": get_stroke_pace()
