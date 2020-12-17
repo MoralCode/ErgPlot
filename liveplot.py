@@ -82,7 +82,6 @@ def process_data_for_plots(i):
 
 		# plt.legend(loc='upper right')
 		# axs[1,1].plot( [item[7] for item in data], label="Work")
-	
 		plt.legend(loc='upper right')
 
 		plt.draw()
@@ -131,11 +130,6 @@ def get_stroke_pace():
 
 def get_pace_values():
 	# # all of these should be in meters per second
-	# point = {
-	# 	"raw": convert_to_rpm(1/(data_source.get_raw_pace()/500)),
-	# 	"differential": convert_to_rpm(get_differential_pace()),
-	# 	"stroke": convert_to_rpm(get_stroke_pace())
-	# }
 	diff_real, diff_erg=get_differential_pace()
 	point = {
 		"raw": 1/(data_source.get_monitor_data()['pace']/500),
