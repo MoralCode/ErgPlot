@@ -67,10 +67,18 @@ def process_data_for_plots(i):
 
 			buffer.append(pace_val)
 
-		axs.plot( [point["raw"] for point in buffer[1:]], label="raw")
+		# axs.plot( [convert_to_rpm(point["raw"]) for point in buffer], label="raw")
+		# axs.plot( [convert_to_rpm(point["differential"]) for point in buffer], label="diff_real")
+		# axs.plot( [convert_to_rpm(point["differential2"]) for point in buffer], label="diff_erg")
+		# axs.plot( [convert_to_rpm(point["stroke"]) for point in buffer], label="stroke")
+
+		# axs.plot( [point["raw"] for point in buffer[1:]], label="raw")
 		axs.plot( [point["differential"] for point in buffer[1:]], label="diff_real")
-		axs.plot( [point["differential2"] for point in buffer[1:]], label="diff_erg")
-		axs.plot( [point["stroke"] for point in buffer[1:]], label="stroke")
+		axs.plot( differentials_over(buffer[1:], average_over=2, value_key="distance"), label="diff_smooth2")
+		axs.plot( differentials_over(buffer[1:], average_over=4, value_key="distance"), label="diff_smooth4")
+		axs.plot( differentials_over(buffer[1:], average_over=8, value_key="distance"), label="diff_smooth8")
+		axs.plot( differentials_over(buffer[1:], average_over=16, value_key="distance"), label="diff_smooth16")
+		# axs.plot( [point["stroke"] for point in buffer[1:]], label="stroke")
 		# 3 different ways
 
 
@@ -113,15 +121,34 @@ def get_differential_pace():
 		timestamp = current_millis
 		last_dist = mon["distance"]
 		last_duration = mon["time"]
-	# substitute delta_t2 here for the erg-distance-based delta 
-		# print(delta_x)
-		# print(delta_t)
-		# if time == "actual":
-		return (delta_x/delta_t, delta_x/delta_t2)
+		return delta_x/delta_t
 	return 0
 
 
+def differentials_over(data, average_over=0, value_key="value", time_key="timestamp"):
+	
+	smoothed_data = []
+	# for every other data point
+	for i in range(len(data)-1):
+		if i <= average_over:
+			# ignore the first average_over number of datapoints as none of them are able to be smoothed due to not enough preceeding datapoints
+			smoothed_data.append(0)#data[i][value_key]
+			
+		else:
+				
+			# smooth the data
+			smoothed_data.append(calculate_differential(
+				data[i-average_over][value_key],
+				data[i-average_over][time_key],
+				data[i][value_key],
+				data[i][time_key]
+				)
+			)
+	return smoothed_data
 
+
+def calculate_differential(start_val, start_time, end_val, end_time):
+	return (end_val-start_val)/((end_time-start_time)/1000)
 
 def get_stroke_pace():
 	sp = data_source.get_stroke_stats()
@@ -130,12 +157,12 @@ def get_stroke_pace():
 
 def get_pace_values():
 	# # all of these should be in meters per second
-	diff_real, diff_erg=get_differential_pace()
 	point = {
-		"raw": 1/(data_source.get_monitor_data()['pace']/500),
-		"differential": diff_real,
-		"differential2": diff_erg,
-		"stroke": get_stroke_pace()
+		# "raw": 1/(data_source.get_monitor_data()['pace']/500),
+		"timestamp": int(round(time.time() * 1000)),
+		"distance": data_source.get_monitor_data()['distance'],
+		"differential": get_differential_pace()
+		# "stroke": get_stroke_pace()
 	}
 	print(point)
 	return point
