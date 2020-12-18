@@ -16,3 +16,10 @@ def LastNlines(fname, n):
 	
 def separate_values(data, separator=","):
 	return separator.join([str(value) for value in data])
+
+def calculate_differential(start_val, start_time, end_val, end_time):
+	return (end_val-start_val)/((end_time-start_time)/1000)
+
+def convert_to_rpm(speed):
+	# speed = 1/(pace/500)
+	return (speed*60*12.93)/3

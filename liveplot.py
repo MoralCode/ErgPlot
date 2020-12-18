@@ -4,7 +4,7 @@ import matplotlib.animation as animation
 from matplotlib import dates as mpldates
 from matplotlib import style
 import time
-from helpers.common import LastNlines
+from helpers.common import LastNlines, calculate_differential, convert_to_rpm
 
 from datetime import datetime
 style.use('fivethirtyeight')
@@ -97,10 +97,6 @@ def process_data_for_plots(i):
 	except Exception as e:
 		print("Error plotting data")
 		print(e)
-	
-def convert_to_rpm(speed):
-	# speed = 1/(pace/500)
-	return (speed*60*12.93)/3
 
 
 last_dist = 0
@@ -146,9 +142,6 @@ def differentials_over(data, average_over=0, value_key="value", time_key="timest
 			)
 	return smoothed_data
 
-
-def calculate_differential(start_val, start_time, end_val, end_time):
-	return (end_val-start_val)/((end_time-start_time)/1000)
 
 def get_stroke_pace():
 	sp = data_source.get_stroke_stats()
