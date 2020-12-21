@@ -34,39 +34,22 @@ class Concept2(DataSourceInterface):
 			workout = self.erg.get_workout()
 
 		#Loop until workout ends
+		print("Recording Data.")
 		while workout['state'] == 1:
 
-			forceplot = self.erg.get_forceplot()
-			#Loop while waiting for drive
-			self.status = Status(State.READY, "Waiting for drive.")
-			print("Waiting for drive.")
-			while forceplot['strokestate'] != 2 and workout['state'] == 1:
-				#ToDo: sleep?
-				forceplot = self.erg.get_forceplot()
-				workout = self.erg.get_workout()
-
-			self.status = Status(State.RECORDING, "Recording Data.")
-			print("Recording Data.")
 			#Record forcecurve data during the drive
-			forcecurve = forceplot['forceplot'] #start of pull (when strokestate first changed to 2)
-			monitor = self.erg.get_monitor() #get monitor data for start of stroke
+			self.collect_data()
+			# update workout var so the loop eventually stops
+			workout = self.erg.get_workout()
 			#Loop during drive
-			while forceplot['strokestate'] == 2:
-				#ToDo: sleep?
-				forceplot = self.erg.get_forceplot()
-				forcecurve.extend(forceplot['forceplot'])
 
-			forceplot = self.erg.get_forceplot()
-			forcecurve.extend(forceplot['forceplot'])
-
-			#save data to buffer
-			print("SaveData")
-			strokestats = self.get_stroke_stats()
-			strokedata = self.new_data_point(monitor, forcecurve, strokestats)
-
+	def collect_data(self):
+		monitor = self.erg.get_monitor()
+		forceplot = self.erg.get_forceplot()
+		strokedata = self.new_data_point(monitor, forceplot['forceplot'], self.get_stroke_stats())
+		self.on_new_data_point(strokedata)
+		# strokestats = self.get_stroke_stats()
 			
-			self.buffer.append(strokedata)
-			self.on_new_data_point()
 
 
 	def get_status(self):

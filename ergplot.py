@@ -11,7 +11,7 @@ from datasources.concept2 import Concept2
 estimated_rpm= 800
 seconds_of_data = 5
 fraction_of_minute = seconds_of_data/60
-buffer_size = math.ceil(estimated_rpm * fraction_of_minute) # how many data points you want to plot at any given time
+buffer_size = 20
 #data_buffer = np.zeros( buffer_size) # this is where you will keep the latest data points
 data_buffer = deque()
 
@@ -52,9 +52,11 @@ def write_new_datapoint(datasource, datapoint):
 		writer.writerow(datasource.data_point_to_csv(datapoint).values())
 
 
-def handle_new_datapoint():
-	raw_data = data_source.get_data_point()
-	write_new_datapoint(data_source, raw_data)
+def handle_new_datapoint(datapoint):
+	# raw_data = data_source.get_data_point()
+	# this may cause a bunch of the first few datapoints to be the same as the buffer fills
+	if datapoint != data_buffer[-1]:
+		write_new_datapoint(data_source, datapoint)
 	
 
 data_source.setup()
