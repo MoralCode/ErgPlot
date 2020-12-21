@@ -1,6 +1,6 @@
 # PylogPlot
 
-The python code for logging and plotting data as part of [ErgPower][https://moralcode.github.io/ErgPower] experiments.
+The python code for logging and plotting data as part of [ErgPower](https://moralcode.github.io/ErgPower) experiments.
 
 
 ## Dependencies
